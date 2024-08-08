@@ -1,20 +1,30 @@
-// Creame la configuración base de express
+// Librerías a importar
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-import router from './routes/crud.routes';
-import { connectDB } from './db' // Configuraciones de MongoDB para conectar a la base de datos
 
+// Importamos las rutas
+import router from './routes/crud.routes';
+
+// Importamos configuraciones de MongoDB para conectar a la base de datos
+import { connectDB } from './db' 
+
+// Llamamos a express
 const app = express();
 
-// Llama a las rutas
+// Conectamos a la base de datos
 connectDB().catch(err => console.error(`No se pudo conectar a MongoDB ❌: ${err}`))
-app.use('/api', router);
-// Escucha al puerto 3000 y dame un mensaje de que el servidor está corriendo
-app.set('port',  3000);
-app.listen(app.get('port'), () => {
-    console.log('Servidor escuchadno en puerto', app.get('port'));
-});
+
+// Llama a las rutas
+app.use('/api', router); // Llama a las rutas del API
+
+// Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
+const port = process.env.PORT || 4000
+app.listen(port, () => {
+    console.log(`Servidor funcionando en puerto ${port} ✅`)
+  }).on('error', (err) => {
+    console.error(`Eror al inciar el servidor: ${err}`)
+  })
 
 
