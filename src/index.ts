@@ -6,7 +6,7 @@ import path from 'path';
 
 // Importamos las rutas
 import router from './routes/crud.routes';
-
+import auth from './routes/auth.routes';
 // Importamos configuraciones de MongoDB para conectar a la base de datos
 import { connectDB } from './db' 
 
@@ -18,6 +18,7 @@ connectDB().catch(err => console.error(`No se pudo conectar a MongoDB ❌: ${err
 
 // Llama a las rutas
 app.use('/api', router); // Llama a las rutas del API
+app.use('/api', auth); // Llama a las rutas del API
 
 // Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
 const port = process.env.PORT || 4000
@@ -26,5 +27,3 @@ app.listen(port, () => {
   }).on('error', (err) => {
     console.error(`Eror al inciar el servidor: ${err}`)
   })
-
-
