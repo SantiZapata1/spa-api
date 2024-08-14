@@ -11,12 +11,14 @@ const UsuarioSchema = new mongoose.Schema({
     nombre_de_usuario: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true,
     },
     correo_electronico: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true,
     },
     // Definición del nombre del usuario
     nombre: {
@@ -34,7 +36,7 @@ const UsuarioSchema = new mongoose.Schema({
     telefono: {
         type: Number,
         length: 10,
-        required: true,
+        required: false,
         trim: true
     },
     // Definición de la contraseña del usuario

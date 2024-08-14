@@ -16,6 +16,19 @@ const app = express();
 // Conectamos a la base de datos
 connectDB().catch(err => console.error(`No se pudo conectar a MongoDB ❌: ${err}`))
 
+
+const corsOrigin:string | undefined = process.env.corsOrigin
+console.log(corsOrigin)
+// Permite a la aplicación recibir datos en formato JSON
+app.use(cors({
+  origin: corsOrigin,
+  credentials: true
+}))
+
+// Middleware para ver las peticiones HTTP en la consola
+app.use(morgan('dev'))
+app.use(express.json())
+
 // Llama a las rutas
 app.use('/api', router); // Llama a las rutas del API
 app.use('/api', auth); // Llama a las rutas del API

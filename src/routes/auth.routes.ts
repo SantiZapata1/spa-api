@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authRequired, authAdmin } from '../middlewares/validateToken'
-import { register, login, logout } from '../controllers/auth.controllers'
+import { register, login, logout } from '../controllers/auth.controllers' 
 import path from 'path';
 // Uso de Router de express
 const router:Router = Router()
