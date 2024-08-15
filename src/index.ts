@@ -3,7 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-
+import cookieParser from 'cookie-parser';
 // Importamos las rutas
 import router from './routes/crud.routes';
 import auth from './routes/auth.routes';
@@ -27,7 +27,10 @@ app.use(cors({
 
 // Middleware para ver las peticiones HTTP en la consola
 app.use(morgan('dev'))
+// Middleware para recibir datos en formato JSON
 app.use(express.json())
+// Middleware para manejo de cookies
+app.use(cookieParser());
 
 // Llama a las rutas
 app.use('/api', router); // Llama a las rutas del API
