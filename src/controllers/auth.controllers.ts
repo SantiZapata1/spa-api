@@ -46,8 +46,7 @@ export const register = async (req, res) => {
 //Login de usuarios
 export const login = async (req, res) => {
 
-    const { nombre, apellido, correo_electronico, nombre_de_usuario, pass } = req.body
-
+    const {  nombre_de_usuario, pass } = req.body
     // Busca el usuario en la base de datos
     const usuarioEncontrado = await usuarios.findOne({ nombre_de_usuario: nombre_de_usuario })
     // Verifica si existe el usuario
@@ -59,8 +58,6 @@ export const login = async (req, res) => {
 
     // Si la contraseña no coincide, devuelve un mensaje de error
     if (!isPassMatched) return res.status(400).json({ message: 'Contraseña incorrecta' })
-
-
 
     // Genera un token de acceso con el método createAccessToken y guarda el id
     const token = await createAccessToken({ id: usuarioEncontrado._id })
@@ -95,4 +92,35 @@ export const logout = async (req, res) => {
         expires: new Date(0)
     })
     return res.sendStatus(200)
+}
+
+// Verify
+
+export const verifyToken = async (req, res) => {
+    // Obtiene el token de la cookie
+    const { token } = req.cookies
+
+    // Si no hay token, devuelve un mensaje de error
+    if (!token) {
+        return res.status(401).json({ message: 'No hay token' })
+    }
+
+    // Verifica el token con el método verify de jwt
+    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+        // Si hay un error, devuelve un mensaje de error
+        if (err) return res.status(401).json({ message: "No autorizado" })
+        // Busca el usuario en la base de datos
+        const userFound = await usuarios.findById(user.id)
+        // Si no encuentra el usuario, devuelve un mensaje de error
+        if (!userFound) return res.status(401).json({ message: "No autorizado" })
+        // Devuelve los datos del usuario
+        return res.json({
+            id: userFound._id,
+            nombre_de_usuario: userFound.nombre_de_usuario,
+            nombre: userFound.nombre,
+            apellido: userFound.apellido,
+            telefono: userFound.telefono,
+            createdAt: userFound.createdAt
+        })
+    })
 }

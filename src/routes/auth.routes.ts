@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authRequired, authAdmin } from '../middlewares/validateToken'
-import { register, login, logout } from '../controllers/auth.controllers' 
+import { register, login, logout, verifyToken } from '../controllers/auth.controllers' 
 import usuarios from '../models/usuario'
 import path from 'path';
 // Uso de Router de express
@@ -14,5 +14,7 @@ router.get('/profile', authRequired, async (req, res) => {
     res.json(user)
     
 })
+router.get('/verify', verifyToken) // Verificación de token
+
 
 export default router
