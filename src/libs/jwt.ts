@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken'
 // Importar la clave secreta desde el archivo config.ts
 import { TOKEN_SECRET } from '../config'
+
 // Crear una función que genere un token de acceso
 export function createAccessToken(payload) {
     // Retorna una promesa que resuelve un token de acceso
