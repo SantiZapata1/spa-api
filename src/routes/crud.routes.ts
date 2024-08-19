@@ -18,13 +18,16 @@ Distintos tipos de peticiones:
 
 // Llamamos a router para definir las rutas del api
 import { Router } from 'express'
-import { accion } from '../controllers/crud.controllers'
-
+import { solicitarTurno, eliminarTurno, obtenerTurnos, obtenerTurnoPorFechas } from '../controllers/crud.controllers'
+// Importar el middleware que requiere iniciar sesión
+import { authRequired } from '../middlewares/validateToken'
 // Definimos las rutas del api
 const router:Router = Router()
 
 // Definimos la ruta para el ping
-router.get('/ping',  accion)
-
+router.post('/solicitar-turno', authRequired, solicitarTurno)
+router.delete('/eliminar-turno/:id', authRequired, eliminarTurno)
+router.get('/obtener-turnos', authRequired, obtenerTurnos)
+router.get('/obtener-turno-por-fechas/:desde/:hasta', authRequired, obtenerTurnoPorFechas)
 // Exportamos las rutas del api
 export default router

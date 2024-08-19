@@ -16,9 +16,64 @@
     un archivo, etc. En este caso, estamos enviando un string con el texto 'pong'
     al cliente.
 */
-export const accion = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+
+import turnos from '../models/turnos' // Importamos el modelo de turnos
+
+export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        res.send('pong') // Enviamos la respuesta al cliente
+        const { fecha, hora, clienteID, servicio, comentarios } = req.body; // Obtenemos los datos del cuerpo de la petición
+        const nuevoTurno = new turnos({ fecha, hora, clienteID, servicio, comentarios }); // Creamos un nuevo turno con los datos recibidos
+        await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
+
+        res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+
+    } catch (error) { // Si hay un error, lo capturamos
+        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+    }
+}
+
+export const eliminarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try {
+        const { id } = req.params; // Obtenemos el id del turno a eliminar
+        await turnos.findByIdAndDelete(id); // Buscamos y eliminamos el turno en la base de datos
+
+        res.status(200).json({ message: 'Turno eliminado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+
+    } catch (error) { // Si hay un error, lo capturamos
+        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+    }
+}
+
+export const obtenerTurnos = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try {
+        const turnosList = await turnos.find(); // Buscamos todos los turnos en la base de datos
+        res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
+    } catch (error) { // Si hay un error, lo capturamos
+        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+    }
+}
+
+export const obtenerTurnoPorFechas = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try {
+        const { fechaInicio, fechaFin } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
+        const turnosList = await turnos.find({ fecha: { $gte: fechaInicio, $lte: fechaFin } }); // Buscamos los turnos en la base de datos en base al rango de fechas
+
+        res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
+    } catch (error) { // Si hay un error, lo capturamos
+        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+    }
+}
+
+export const editarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try {
+        const { id } = req.params; // Obtenemos el id del turno a editar
+        const { fecha, hora, clienteID, servicio, comentarios } = req.body; // Obtenemos los datos del cuerpo de la petición
+        await turnos.findByIdAndUpdate(id, { fecha, hora, clienteID, servicio, comentarios }); // Buscamos y actualizamos el turno en la base de datos
+
+        res.status(200).json({ message: 'Turno editado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+
     } catch (error) { // Si hay un error, lo capturamos
         res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
     }
