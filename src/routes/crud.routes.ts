@@ -18,7 +18,13 @@ Distintos tipos de peticiones:
 
 // Llamamos a router para definir las rutas del api
 import { Router } from 'express'
-import { solicitarTurno, eliminarTurno, obtenerTurnos, obtenerTurnoPorFechas } from '../controllers/crud.controllers'
+import { 
+    solicitarTurno, 
+    eliminarTurno, 
+    obtenerTurnos, 
+    obtenerTurnoPorFechas } 
+    from '../controllers/crud.controllers'
+    
 // Importar el middleware que requiere iniciar sesión
 import { authRequired } from '../middlewares/validateToken'
 // Definimos las rutas del api

@@ -28,7 +28,7 @@ export const solicitarTurno = async (req, res) => { // Definimos la función que
         res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
-        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+        res.status(500).json({ message: 'Hubo un error al solicitar turno.' }); // Enviamos un mensaje de error al cliente
     }
 }
 
@@ -40,7 +40,7 @@ export const eliminarTurno = async (req, res) => { // Definimos la función que 
         res.status(200).json({ message: 'Turno eliminado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
-        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+        res.status(500).json({ message: 'Hubo un error al eliminar turno.' }); // Enviamos un mensaje de error al cliente
     }
 }
 
@@ -50,7 +50,7 @@ export const obtenerTurnos = async (req, res) => { // Definimos la función que 
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
-        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+        res.status(500).json({ message: 'Hubo un error al obtener turnos.' }); // Enviamos un mensaje de error al cliente
     }
 }
 
@@ -62,7 +62,7 @@ export const obtenerTurnoPorFechas = async (req, res) => { // Definimos la funci
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
-        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+        res.status(500).json({ message: 'Hubo un error al obtener turnos por fechas.' }); // Enviamos un mensaje de error al cliente
     }
 }
 
@@ -75,6 +75,6 @@ export const editarTurno = async (req, res) => { // Definimos la función que se
         res.status(200).json({ message: 'Turno editado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
-        res.status(500).json({ message: 'Hubo un error al realizar el ping.' }); // Enviamos un mensaje de error al cliente
+        res.status(500).json({ message: 'Hubo un error al editar turno.' }); // Enviamos un mensaje de error al cliente
     }
 }
