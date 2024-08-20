@@ -7,12 +7,18 @@ import cookieParser from 'cookie-parser';
 // Importamos las rutas
 import router from './routes/crud.routes';
 import auth from './routes/auth.routes';
+import comentarios from "./routes/comentarios.routes"
 
 // Importamos configuraciones de MongoDB para conectar a la base de datos
 import { connectDB } from './db' 
 
 // Llamamos a express
 const app = express();
+
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
 
 // Conectamos a la base de datos
 connectDB().catch(err => console.error(`No se pudo conectar a MongoDB ❌: ${err}`))
@@ -42,6 +48,7 @@ app.use(cookieParser());
 // Llama a las rutas
 app.use('/api', router); // Llama a las rutas del API
 app.use('/api', auth); // Llama a las rutas del API
+app.use('/api', comentarios); // Llama a las rutas del API
 
 // Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
 const port = process.env.PORT || 4000

@@ -35,5 +35,7 @@ router.post('/solicitar-turno', authRequired, solicitarTurno)
 router.delete('/eliminar-turno/:id', authRequired, eliminarTurno)
 router.get('/obtener-turnos', authRequired, obtenerTurnos)
 router.get('/obtener-turno-por-fechas/:desde/:hasta', authRequired, obtenerTurnoPorFechas)
+
+
 // Exportamos las rutas del api
 export default router
