@@ -79,6 +79,7 @@ export const login = async (req, res) => {
         nombre: usuarioEncontrado.nombre,
         apellido: usuarioEncontrado.apellido,
         telefono: usuarioEncontrado.telefono,
+        correo_electronico: usuarioEncontrado.correo_electronico,
         admin: usuarioEncontrado.admin,
         createdAt: usuarioEncontrado.createdAt
 
