@@ -5,7 +5,7 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 // Importamos las rutas
-import router from './routes/crud.routes';
+import router from './routes/turnos.routes';
 import auth from './routes/auth.routes';
 import comentarios from "./routes/comentarios.routes"
 
@@ -15,6 +15,7 @@ import { connectDB } from './db'
 // Llamamos a express
 const app = express();
 
+// prueba para ver si funciona el servidor
 app.get('/ping', (req, res) => {
   res.send('pong');
 });

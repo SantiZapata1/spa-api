@@ -1,53 +1,68 @@
-import Comentario from "../models/comentarios.model";
+// importamos el modelo de un comentario
+import Comentario from "../models/comentario.model";
 
-export const getComments = async (req,res)=>{
-    const comentarios = await Comentario.find()
-
-    if(!comentarios){
-        return res.status(404).json({message:"no hay comentarios aun"})
+// Obtener todos los comentarios
+export const getComments = async (req, res) => {
+    try {
+      const comentarios = await Comentario.find();
+      if (!comentarios.length) {
+        return res.status(404).json({ message: "No hay comentarios aún" });
+      }
+      res.json(comentarios);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener los comentarios", error });
     }
+  };
 
-    res.json(comentarios)
-
-};
-
-export const createComment = async (req,res)=>{
-    const {servicio, comentario} = req.body;
-
-    const nuevoComentario = new Comentario({
-        servicio,
-        comentario
-    })
-
-    const comentarioGuardado = await nuevoComentario.save()
-    res.json(comentarioGuardado)
-
-};
-export const getComment = async (req,res)=>{
-
-    const comentario = await Comentario.findById(req.body.id)
-
-    if(!comentario){
-        return res.status(404).json({message:"comment not found"})
+// Obtener un comentario DEBE IR PARAMS O BODY?
+export const getComment = async (req, res) => {
+    try {
+      const comentario = await Comentario.findById(req.params.id);
+      if (!comentario) {
+        return res.status(404).json({ message: "Comentario no encontrado" });
+      }
+      res.json(comentario);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener el comentario", error });
     }
-    res.json(comentario)
+  };
 
-
-};
-export const updateComment = async (req,res)=>{
-    const comentario = await Comentario.findByIdAndUpdate(req.body.id, req.body, {new:true})
-
-    if(!comentario){
-        return res.status(404).json
+// Crear un comentario
+export const createComment = async (req, res) => {
+    try {
+      const { servicio, comentario } = req.body;
+      const nuevoComentario = new Comentario({ servicio, comentario });
+      const comentarioGuardado = await nuevoComentario.save();
+      res.status(201).json(comentarioGuardado);
+    } catch (error) {
+      res.status(500).json({ message: "Error al crear el comentario", error });
     }
-    res.json(comentario)
+  };
+  
 
-};
-export const deleteComment = async (req,res)=>{
-    const comentario = await Comentario.findByIdAndDelete(req.body.id)
-
-    if(!comentario){
-        return res.status(404).json({message:"comentario no encontrado"})
+// Actualizar un comentario BODY O PARAMS?
+export const updateComment = async (req, res) => {
+    try {
+      const comentario = await Comentario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!comentario) {
+        return res.status(404).json({ message: "Comentario no encontrado" });
+      }
+      res.json(comentario);
+    } catch (error) {
+      res.status(500).json({ message: "Error al actualizar el comentario", error });
     }
-    res.json(comentario)
+  };
+
+
+// Eliminar un comentario BODY O PARAMS?
+export const deleteComment = async (req, res) => {
+  try {
+    const comentario = await Comentario.findByIdAndDelete(req.params.id);
+    if (!comentario) {
+      return res.status(404).json({ message: "Comentario no encontrado" });
+    }
+    res.json({ message: "Comentario eliminado", comentario });
+  } catch (error) {
+    res.status(500).json({ message: "Error al eliminar el comentario", error });
+  }
 };

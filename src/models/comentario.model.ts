@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// atributos de un comentario
 const commentSchema=new mongoose.Schema({
 
     servicio:{
