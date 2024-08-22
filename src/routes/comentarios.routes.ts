@@ -12,19 +12,19 @@ import {
 
 const router:Router = Router()
 
-// ruta para obtener todos los ocmentarios
+// Ruta para obtener todos los comentarios
 router.get("/comentarios", getComments);
 
-// rutas para obtener un comentario
+// Rutas para obtener un comentario
 router.get(`/comentario/:id`, getComment);
 
 // Ruta para obtener los comentarios de un usuario
 router.get('/comentarios-usuario/:id', getCommentFromUser);
 
-// ruta para crear un ocmentario
+// Ruta para crear un comentario
 router.post("/comentarios", createComment);
 
-// ruta para eliminar un comentario
+// Ruta para eliminar un comentario
 router.delete(`/comentarios/:id`, deleteComment);
 
 // ruta para editar un comentario
