@@ -6,7 +6,9 @@ import {
     getComments, 
     createComment, 
     deleteComment, 
-    updateComment } from '../controllers/comentarios.controllers';
+    updateComment,
+    getCommentFromUser
+} from '../controllers/comentarios.controllers';
 
 const router:Router = Router()
 
@@ -16,6 +18,9 @@ router.get("/comentarios", getComments);
 // rutas para obtener un comentario
 router.get(`/comentario/:id`, getComment);
 
+// Ruta para obtener los comentarios de un usuario
+router.get('/comentarios-usuario/:id', getCommentFromUser);
+
 // ruta para crear un ocmentario
 router.post("/comentarios", createComment);
 
@@ -24,5 +29,6 @@ router.delete(`/comentarios/:id`, deleteComment);
 
 // ruta para editar un comentario
 router.put(`/comentarios/:id`, updateComment);
+
 
 export default router;

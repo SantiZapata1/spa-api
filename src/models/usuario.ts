@@ -51,6 +51,11 @@ const UsuarioSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    comentarios: {
+        type: [String], // Array de IDs de comentarios (Modelo de comentario)
+        required: false,
+        trim: true,
+    }
 
 },
     {
