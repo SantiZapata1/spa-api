@@ -120,8 +120,20 @@ export const verifyToken = async (req, res) => {
             nombre_de_usuario: userFound.nombre_de_usuario,
             nombre: userFound.nombre,
             apellido: userFound.apellido,
+            correo_electronico: userFound.correo_electronico,
             telefono: userFound.telefono,
             createdAt: userFound.createdAt
         })
     })
+}
+
+export const editUser = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { nombre, apellido, correo_electronico, telefono } = req.body
+        const user = await usuarios.findByIdAndUpdate(id, { nombre, apellido, correo_electronico, telefono }, { new: true })
+        res.json(user)
+    } catch (error) {
+        console.log(error)
+    }
 }

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authRequired, authAdmin } from '../middlewares/validateToken'
-import { register, login, logout, verifyToken } from '../controllers/auth.controllers' 
+import { register, login, logout, verifyToken, editUser } from '../controllers/auth.controllers' 
 import usuarios from '../models/usuario'
 import path from 'path';
 
@@ -18,6 +18,6 @@ router.get('/profile', authRequired, async (req, res) => {//esta funcion puede s
     
 })
 router.get('/verify', verifyToken) // Verificación de token
-
+router.put('/editar-usuario/:id', authRequired, editUser)
 
 export default router
