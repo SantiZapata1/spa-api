@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import router from './routes/turnos.routes';
 import auth from './routes/auth.routes';
 import comentarios from "./routes/comentarios.routes"
-
+import contacto from "./routes/contacto.routes"
 // Importamos configuraciones de MongoDB para conectar a la base de datos
 import { connectDB } from './db' 
 
@@ -50,7 +50,7 @@ app.use(cookieParser());
 app.use('/api', router); // Llama a las rutas del API
 app.use('/api', auth); // Llama a las rutas del API
 app.use('/api', comentarios); // Llama a las rutas del API
-
+app.use('/api', contacto)
 // Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
 const port = process.env.PORT || 4000
 app.listen(port, () => {
