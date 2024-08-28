@@ -14,10 +14,11 @@ export const getComments = async (req, res) => {
     }
   };
 
-// Obtener un comentario DEBE IR PARAMS O BODY?
+// Obtener un comentario 
 export const getComment = async (req, res) => {
     try {
-      const comentario = await Comentario.findById(req.params.id);
+      const { id } = req.params;
+      const comentario = await Comentario.findById( id );
       if (!comentario) {
         return res.status(404).json({ message: "Comentario no encontrado" });
       }
@@ -34,7 +35,6 @@ export const getCommentFromUser = async (req, res) => {
       // Busca todos los Ids de los comentarios del usuario y los busca en la colección de comentarios
       const comentarios = await Comentario.find({ _id: { $in: usuario?.comentarios } });
 
-
       if (!usuario) {
         return res.status(404).json({ message: "Usuario no encontrado" });
       }
@@ -49,7 +49,7 @@ export const createComment = async (req, res) => {
     try {
       // Obtener servicio y comentario
       const { user_id, servicio, comentario } = req.body;
-      console.log(req.body)
+
       // Crear un nuevo comentario
       const nuevoComentario = new Comentario({ servicio, comentario });
       // Guardar el comentario en la base de datos
@@ -67,24 +67,36 @@ export const createComment = async (req, res) => {
   };
   
 
-// Actualizar un comentario BODY O PARAMS?
+// Actualizar un comentario
 export const updateComment = async (req, res) => {
     try {
-      const comentario = await Comentario.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!comentario) {
+      // Obtener servicio y comentario
+      const { servicio, comentario } = req.body;
+      // Obtener el id del comentario
+      const { id } = req.params;
+      // Actualizar el comentario
+      const comentarioActualizado = await Comentario.findByIdAndUpdate(id, { servicio, comentario }, { new: true });
+      // Si el comentario no existe
+      if (!comentarioActualizado) {
         return res.status(404).json({ message: "Comentario no encontrado" });
       }
-      res.json(comentario);
+      // Responder con el comentario actualizado
+      res.json(comentarioActualizado);
+      
     } catch (error) {
       res.status(500).json({ message: "Error al actualizar el comentario", error });
     }
   };
 
 
-// Eliminar un comentario BODY O PARAMS?
+// Eliminar un comentario
 export const deleteComment = async (req, res) => {
   try {
-    const comentario = await Comentario.findByIdAndDelete(req.params.id);
+    // Obtener el id del comentario
+    const { id } = req.params;
+    // Eliminar el comentario
+    const comentario = await Comentario.findByIdAndDelete( id );
+    // Si el comentario no existe
     if (!comentario) {
       return res.status(404).json({ message: "Comentario no encontrado" });
     }
