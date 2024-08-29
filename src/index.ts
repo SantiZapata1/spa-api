@@ -11,6 +11,7 @@ import comentarios from "./routes/comentarios.routes"
 import contacto from "./routes/contacto.routes"
 import noticias from "./routes/noticias.routes"
 import servicio from './routes/servicio.routes';
+import cv from './routes/busquedaEmp.routes';
 
 // Importamos configuraciones de MongoDB para conectar a la base de datos
 import { connectDB } from './db' 
@@ -56,6 +57,7 @@ app.use('/api', comentarios); // Llama a las rutas del API
 app.use('/api', contacto) // Llama a las rutas del API
 app.use('/api', noticias) // Llama a las rutas del API
 app.use('/api', servicio)
+app.use('/api', cv) // Llama a las rutas del API
 
 // Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
 const port = process.env.PORT || 4000
