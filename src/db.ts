@@ -6,6 +6,7 @@ require('dotenv').config()
 const user:string | undefined = process.env.user
 const pass:string | undefined = process.env.pass
 const dbName:string | undefined = process.env.dbName
+
 //URI de la base de datos
 const uri:string = `mongodb+srv://${user}:${pass}@cluster0.uijihcv.mongodb.net/${dbName}?retryWrites=true&w=majority`;
  

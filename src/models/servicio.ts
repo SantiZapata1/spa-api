@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const ServicioSchema = new mongoose.Schema({
+const ServicioSchema = new mongoose.Schema(
+    {
     nombre: {
         type: String,
         required: true,
@@ -20,7 +21,8 @@ const ServicioSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-})
+}
+)
 
 const servicio = mongoose.model('servicio', ServicioSchema)
 export default servicio;

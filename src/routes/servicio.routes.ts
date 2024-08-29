@@ -1,8 +1,11 @@
-import servicio from "../models/servicio";
-import { authAdmin } from "../middlewares/validateToken";
 import { Router } from "express";
 
-import { crearServicio, obtenerServicios, eliminarServicio, editarServicio } from "../controllers/servicio.controller";
+import { 
+    crearServicio, 
+    obtenerServicios, 
+    eliminarServicio, 
+    editarServicio } from "../controllers/servicio.controller";
+
 const router = Router();
 
 router.post("/crear-servicio", crearServicio)
