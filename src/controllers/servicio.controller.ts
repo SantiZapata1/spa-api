@@ -29,12 +29,11 @@ export const eliminarServicio = async (req, res) => {
 }
 
 // Obtener todos los servicios
-
 export const obtenerServicios = async (req, res) => {
     try {
-        const { tipo } = req.params
-        const serviciosList = await servicio.find({ tipo });
 
+        // const { tipo } = req.params
+        const serviciosList = await servicio.find();
         res.status(200).json(serviciosList);
 
     } catch (error) {
