@@ -4,6 +4,7 @@ import busquedaEmp from "../models/busquedaEmp.model";
 //Creamos un cv
 export const crearCV = async (req, res) => {
   try {
+    console.log("LLEGO")
       const { nombre, apellido, email, telefono, propuesta } = req.body;
       const nuevaBusquedaEmp = new busquedaEmp({ nombre, apellido, email, telefono, propuesta });
       const busquedaEmpGuardada = await nuevaBusquedaEmp.save();
