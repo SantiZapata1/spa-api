@@ -21,7 +21,11 @@ const ServicioSchema = new mongoose.Schema(
         required: true,
         trim: true
     },
-}
+    date:{
+        type:Date,
+        default:Date.now
+    }
+},{ timestamps: true }
 )
 
 const servicio = mongoose.model('servicio', ServicioSchema)
