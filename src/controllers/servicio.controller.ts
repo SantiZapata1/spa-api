@@ -53,6 +53,8 @@ export const editarServicio = async (req, res) => {
     try {
         const { id } = req.params;
         const { nombre, tipo, precio, detalles } = req.body;
+        console.log(req.body)
+        
         await servicio.findByIdAndUpdate(id, { nombre, tipo, precio, detalles });
     } catch (error) {
         res.status(500).json({ message: 'Hubo un error al editar el servicio.' });

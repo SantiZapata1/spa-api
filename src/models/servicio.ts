@@ -17,7 +17,7 @@ const ServicioSchema = new mongoose.Schema(
         required: true
     },
     detalles: {
-        type: [String],
+        type: String,
         required: true,
         trim: true
     },
