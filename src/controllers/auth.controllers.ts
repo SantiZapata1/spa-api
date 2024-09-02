@@ -122,6 +122,7 @@ export const verifyToken = async (req, res) => {
             apellido: userFound.apellido,
             correo_electronico: userFound.correo_electronico,
             telefono: userFound.telefono,
+            admin: userFound.admin,
             createdAt: userFound.createdAt
         })
     })
