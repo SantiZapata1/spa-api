@@ -59,6 +59,11 @@ app.use('/api', noticias) // Llama a las rutas del API
 app.use('/api', servicio)
 app.use('/api', cv) // Llama a las rutas del API
 
+// Imagenes
+app.use('/api/images', express.static(path.join(__dirname, 'imagesFromDB')));
+
+
+
 // Definimos el puerto en el que va a correr el servidor, ya sea el que definimos en las variables de entorno o el 4000
 const port = process.env.PORT || 4000
 app.listen(port, () => {
