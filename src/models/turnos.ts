@@ -13,8 +13,8 @@ const TurnoSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    // Definición del cliente del turno (ID)
-    clienteID: {
+    // Definición del cliente 
+    cliente: {
         type: String,
         required: true,
         trim: true

@@ -21,8 +21,8 @@ import turnos from '../models/turnos' // Importamos el modelo de turnos
 
 export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        const { fecha, hora, clienteID, servicio, comentarios } = req.body; // Obtenemos los datos del cuerpo de la petición
-        const nuevoTurno = new turnos({ fecha, hora, clienteID, servicio, comentarios }); // Creamos un nuevo turno con los datos recibidos
+        const { fecha, hora, cliente, servicio, comentarios } = req.body; // Obtenemos los datos del cuerpo de la petición
+        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios }); // Creamos un nuevo turno con los datos recibidos
         await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
 
         res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
