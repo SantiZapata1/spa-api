@@ -2,6 +2,8 @@ import noticias from "../models/noticias"
 const formidable = require('formidable'); //Módulo para formularios
 const fs = require('fs') //Módulo para guardar imagenes
 import path from 'path'
+
+// Crear noticias
 export const crearNoticia = async (req , res ) => {
   
     const form = new formidable.IncomingForm()
@@ -59,6 +61,8 @@ export const crearNoticia = async (req , res ) => {
 
 }
 
+// Obtener noticias
+
 export const obtenerNoticias = async (req , res ) => {
     try {
         const noticiasList = await noticias.find()
@@ -68,6 +72,7 @@ export const obtenerNoticias = async (req , res ) => {
     }
 }
 
+// Eliminar noticias
 export const eliminarNoticiaId = async (req , res ) => {
     try {
         const { id } = req.params
@@ -75,5 +80,20 @@ export const eliminarNoticiaId = async (req , res ) => {
         return res.status(200).json({ message: 'Noticia eliminada correctamente' })
     } catch (error) {
         return res.status(500).json({ message: 'Error al eliminar la noticia' })
+    }
+}
+
+// Editar noticias
+export const editarNoticiaId = async (req , res ) => {
+    try {
+        const { id } = req.params
+        const { titulo, contenido } = req.body
+        console.log(req.body)
+        await noticias.findByIdAndUpdate(id, { titulo, contenido })
+        
+        
+        return res.status(200).json({ message: 'Noticia editada correctamente' })
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al editar la noticia' })
     }
 }
