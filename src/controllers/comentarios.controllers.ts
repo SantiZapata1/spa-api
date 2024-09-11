@@ -1,6 +1,7 @@
 // importamos el modelo de un comentario
 import Comentario from "../models/comentario.model";
 import Usuario from "../models/usuario";
+
 // Obtener todos los comentarios
 export const getComments = async (req, res) => {
     try {
@@ -13,6 +14,7 @@ export const getComments = async (req, res) => {
       res.status(500).json({ message: "Error al obtener los comentarios", error });
     }
   };
+
 
 // Obtener un comentario 
 export const getComment = async (req, res) => {
