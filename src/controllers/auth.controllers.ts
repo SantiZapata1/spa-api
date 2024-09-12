@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config'
 import path from 'path'
 const fs = require('fs') //Módulo para guardar imagenes
-
+const produccion = process.env.produccion
 
 //Registro de usuarios
 //recibe los datos de un nuevo usuario desde el formulario
@@ -62,15 +62,26 @@ export const login = async (req, res) => {
     // Genera un token de acceso con el método createAccessToken y guarda el id
     const token = await createAccessToken({ id: usuarioEncontrado._id })
 
-    // Guarda el token en una cookie
-    res.cookie('token', token, {
-        /* Esto debe estar activado en producción */
-        // domain: '.gonzaloebel.tech',
-        // secure: process.env.NODE_ENV === 'production',
-        // httpOnly: true,
-        // sameSite: 'none', // Permite el envío entre sitios
+    
+    let configs: {} = {
         maxAge: 24 * 60 * 60 * 1000
+    }
+    /* Esto debe estar activado en producción */
+    if (produccion == "true") {
+        configs = {
+            domain: '.gonzaloebel.tech',
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            sameSite: 'none', // Permite el envío entre sitios
+
+        }
+    }
+    
+    res.cookie('token', token, {
+        configs
     });
+
+
 
     //Envio al frontend de los datos del usuario registrado
     res.json({
@@ -89,11 +100,25 @@ export const login = async (req, res) => {
 
 //Logout 
 export const logout = async (req, res) => {
-    res.cookie('token', "", {
+    let configs: {} = {
         expires: new Date(0)
+    }
+    console.log(produccion)
+    if (produccion == "true") {
+        configs = {
+            domain: '.gonzaloebel.tech',
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            sameSite: 'none', // Permite el envío entre sitios
+            expires: new Date(0)
+        }
+    }
+    res.cookie('token', "", {
+        configs
     })
     return res.sendStatus(200)
 }
+
 
 // Verify
 
