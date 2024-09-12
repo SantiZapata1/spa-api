@@ -32,11 +32,10 @@ connectDB().catch(err => console.error(`No se pudo conectar a MongoDB ❌: ${err
 
 const corsOrigin:string | undefined = process.env.corsOrigin
 
-console.log("Cors origin: ",corsOrigin)
 
 // Permite a la aplicación recibir datos en formato JSON
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3000/'],//cualquiera de las dos url funcionan
+  origin: corsOrigin,
   optionsSuccessStatus: 200,
   credentials: true
 }))
