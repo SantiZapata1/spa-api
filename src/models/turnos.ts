@@ -5,7 +5,8 @@ const TurnoSchema = new mongoose.Schema({
     fecha: {
         type: Date,
         required: true,
-        trim: true
+        trim: true,
+
     },
     // Definición de la hora del turno
     hora: {

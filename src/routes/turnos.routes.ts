@@ -26,9 +26,9 @@ import { authRequired } from '../middlewares/validateToken'
 const router:Router = Router()
 
 // Definimos la ruta para el ping
-router.post('/solicitar-turno', authRequired, solicitarTurno)
+router.post('/solicitar-turno', solicitarTurno)
 router.delete('/eliminar-turno/:id', authRequired, eliminarTurno)
-router.get('/obtener-turnos', authRequired, obtenerTurnos)
+router.get('/obtener-turnos', obtenerTurnos)
 router.get('/obtener-turno-por-fechas/:desde/:hasta', authRequired, obtenerTurnoPorFechas)
 
 
