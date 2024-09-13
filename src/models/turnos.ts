@@ -30,8 +30,9 @@ const TurnoSchema = new mongoose.Schema({
         type: String,
         required: false,
         trim: true
-    }
-})
+    },
+},{ timestamps: true })
+
 
 // Exportamos el modelo de Usuario
 const turnos = mongoose.model('turnos', TurnoSchema)
