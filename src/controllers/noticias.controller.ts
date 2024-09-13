@@ -42,7 +42,7 @@ export const crearNoticia = async (req, res) => {
 
             })
             // Guarda la imagen en la base de datos con el id de noticias
-            let dirFile = path.join(__dirname, `../imagesFromDB/noticias/${noticia._id}.${formato}`) //crear la  ruta para guardar la imagen    
+            let dirFile = path.join(__dirname, `../imagesFromDB/Noticias/${noticia._id}.${formato}`) //crear la  ruta para guardar la imagen    
             // Crear la carpeta si no existe
             const dirPath = path.dirname(dirFile);
             if (!fs.existsSync(dirPath)) {
