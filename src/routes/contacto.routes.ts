@@ -25,8 +25,9 @@ import { authAdmin, authRequired } from '../middlewares/validateToken'
 // Definimos las rutas del api
 const router:Router = Router()
 
-// Definimos la ruta para el ping
-router.post('/enviar-mensaje-contacto', authRequired, enviarMensajeContacto)
+// Ruta para enviar mensaje
+router.post('/enviar-mensaje-contacto', enviarMensajeContacto)
+// Ruta para obtener mensajes de contacto
 router.get('/obtener-contactos', authAdmin, getContactos)
 // Exportamos las rutas del api
 export default router
