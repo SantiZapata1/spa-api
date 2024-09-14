@@ -18,13 +18,14 @@
 */
 
 import turnos from '../models/turnos' // Importamos el modelo de turnos
-
+import usuarios from '../models/usuario' // Importamos el modelo de usuarios
 export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        const { fecha, hora, cliente, servicio, comentarios } = req.body; // Obtenemos los datos del cuerpo de la petición
+        const { fecha, hora, cliente, servicio, comentarios, idUsuario } = req.body; // Obtenemos los datos del cuerpo de la petición
         const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios }); // Creamos un nuevo turno con los datos recibidos
         await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
-
+        await usuarios.findByIdAndUpdate(idUsuario, { $push: { turnos: nuevoTurno._id } }); // Buscamos y actualizamos el usuario en la base de datos
+        
         res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
@@ -36,7 +37,9 @@ export const eliminarTurno = async (req, res) => { // Definimos la función que 
     try {
         const { id } = req.params; // Obtenemos el id del turno a eliminar
         await turnos.findByIdAndDelete(id); // Buscamos y eliminamos el turno en la base de datos
-
+        // Elimina también del array turnos de la BD en usuarios
+        await usuarios.updateMany({ $pull: { turnos: id } }); // Buscamos y actualizamos el usuario en la base de datos
+        
         res.status(200).json({ message: 'Turno eliminado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
@@ -87,5 +90,21 @@ export const editarTurno = async (req, res) => { // Definimos la función que se
 
     } catch (error) { // Si hay un error, lo capturamos
         res.status(500).json({ message: 'Hubo un error al editar turno.' }); // Enviamos un mensaje de error al cliente
+    }
+}
+
+
+export const obtenerTurnosUsuario = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try {
+        const { id } = req.params; // Obtenemos el id del usuario
+        const usuario = await usuarios.findById(id); // Buscamos el usuario en la base de datos
+        const turnosList = await turnos.find({ _id: { $in: usuario?.turnos } }); // Buscamos los turnos en la base de datos que pertenecen al usuario
+
+        console.log(turnosList)
+        
+        res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
+    } catch (error) { // Si hay un error, lo capturamos
+        res.status(500).json({ message: 'Hubo un error al obtener turnos del usuario.' }); // Enviamos un mensaje de error al cliente
     }
 }

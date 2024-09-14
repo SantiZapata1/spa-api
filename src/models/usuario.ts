@@ -55,6 +55,11 @@ const UsuarioSchema = new mongoose.Schema({
         type: [String], // Array de IDs de comentarios (Modelo de comentario)
         required: false,
         trim: true,
+    },
+    turnos: {
+        type: [String],  // Array de IDs de turnos (Modelo de turno)
+        required: false,
+        trim: true,
     }
 
 },

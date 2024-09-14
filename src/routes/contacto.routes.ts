@@ -18,15 +18,15 @@ Distintos tipos de peticiones:
 
 // Llamamos a router para definir las rutas del api
 import { Router } from 'express'
-import { enviarMensajeContacto } from '../controllers/contacto.controller'
+import { enviarMensajeContacto, getContactos } from '../controllers/contacto.controller'
 
 // Importar el middleware que requiere iniciar sesión
-import { authRequired } from '../middlewares/validateToken'
+import { authAdmin, authRequired } from '../middlewares/validateToken'
 // Definimos las rutas del api
 const router:Router = Router()
 
 // Definimos la ruta para el ping
 router.post('/enviar-mensaje-contacto', authRequired, enviarMensajeContacto)
-
+router.get('/obtener-contactos', authAdmin, getContactos)
 // Exportamos las rutas del api
 export default router
