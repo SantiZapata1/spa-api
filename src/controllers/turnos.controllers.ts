@@ -54,6 +54,17 @@ export const obtenerTurnos = async (req, res) => { // Definimos la función que 
     }
 }
 
+export const getTurnosDeUsuario = async (req, res) => {
+    
+    try{
+
+        
+    }catch(error){
+        console.log("error obteniendo turnos de usuario", error);
+    }
+
+};
+
 export const obtenerTurnoPorFechas = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
         const { fechaInicio, fechaFin } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
