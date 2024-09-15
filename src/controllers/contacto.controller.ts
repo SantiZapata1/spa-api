@@ -3,6 +3,7 @@ import contacto from '../models/contacto';
 
 // Enviar mensajes de contacto
 export const enviarMensajeContacto = async (req, res) => {
+    console.log("LLEGANDO")
     try {
         const { nombre, correo_electronico, mensaje } = req.body;
 
