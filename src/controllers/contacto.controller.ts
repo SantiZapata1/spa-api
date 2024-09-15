@@ -29,7 +29,7 @@ export const getContactos = async (req,res ) => {
 // Eliminar mensaje de contacto
 export const deleteContacto = async (req, res) => {
     try{ 
-        const { id } = req.body
+        const { id } = req.params
 
         await contacto.findByIdAndDelete(id)
     }catch(error){

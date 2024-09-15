@@ -18,7 +18,7 @@ Distintos tipos de peticiones:
 
 // Llamamos a router para definir las rutas del api
 import { Router } from 'express'
-import { enviarMensajeContacto, getContactos } from '../controllers/contacto.controller'
+import { enviarMensajeContacto, getContactos, deleteContacto } from '../controllers/contacto.controller'
 
 // Importar el middleware que requiere iniciar sesión
 import { authAdmin, authRequired } from '../middlewares/validateToken'
@@ -29,5 +29,7 @@ const router:Router = Router()
 router.post('/enviar-mensaje-contacto', enviarMensajeContacto)
 // Ruta para obtener mensajes de contacto
 router.get('/obtener-contactos', authAdmin, getContactos)
+// Ruta para eliminar mensajes de contacto
+router.delete('/eliminar-contacto/:id', authAdmin, deleteContacto)
 // Exportamos las rutas del api
 export default router
