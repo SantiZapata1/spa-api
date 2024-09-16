@@ -49,7 +49,8 @@ export const eliminarTurno = async (req, res) => { // Definimos la función que 
 
 export const obtenerTurnos = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        const turnosList = await turnos.find(); // Buscamos todos los turnos en la base de datos
+        // Busca los turnos del más reciente al más antiguo
+        const turnosList = await turnos.find().sort({ fecha: -1 }); // Buscamos los turnos en la base de datos
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
