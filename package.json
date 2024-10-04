@@ -7,7 +7,6 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx ts-node -- src/index.ts"
-
   },
   "author": "",
   "license": "ISC",
@@ -25,9 +24,11 @@
     "nodemon": "^3.1.4",
     "passport": "^0.7.0",
     "path": "^0.12.7",
+    "stripe": "^17.1.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/stripe": "^8.0.417",
     "typescript": "^5.5.4"
   }
 }

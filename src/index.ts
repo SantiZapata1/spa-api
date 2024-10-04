@@ -14,6 +14,8 @@ import servicio from './routes/servicio.routes';
 import turnos from './routes/turnos.routes';
 import cv from './routes/busquedaEmp.routes';
 import admins from './routes/usuarios.routes';
+//Pago
+import paymantRoutes from './routes/payment.routes';
 
 // Importamos configuraciones de MongoDB para conectar a la base de datos
 import { connectDB } from './db' 
@@ -61,6 +63,8 @@ app.use('/api', servicio) // Llama a las rutas del API
 app.use('/api', cv) // Llama a las rutas del API
 app.use('/api', turnos) // Llama a las rutas del API 
 app.use('/api', admins) // Llama a las rutas del API
+//Pago
+app.use('/api', paymantRoutes);
 // Imagenes
 app.use('/api/images', express.static(path.join(__dirname, 'imagesFromDB')));
 
