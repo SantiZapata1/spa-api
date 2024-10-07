@@ -9,7 +9,7 @@ const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 // Obtener url de la aplicación (localhost:3000) en una constante
 
-const appUrl = process.env.URLApp || "http://localhost:3000";
+const appUrl = process.env.URLApp || "http://localhost:4000";
 
 export const createSession = async (req, res) => {
     const { nombreServicio, precio } = req.body; 
