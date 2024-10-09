@@ -51,6 +51,12 @@ const UsuarioSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    rol: {
+        type: String,
+        required: true,
+        trim: true,
+        default: 'Usuario'
+    },
     comentarios: {
         type: [String], // Array de IDs de comentarios (Modelo de comentario)
         required: false,
