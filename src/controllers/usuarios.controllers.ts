@@ -2,7 +2,7 @@ import usuarios from "../models/usuario";
 
 export const getAdmins = async (req, res) => {
     try {
-        const admins = await usuarios.find({ admin: true });
+        const admins = await usuarios.find({ rol: "Administrador" });
         console.log(admins)
         res.status(200).json(admins);
     } catch (error: any) {

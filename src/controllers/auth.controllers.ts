@@ -92,6 +92,7 @@ export const login = async (req, res) => {
         telefono: usuarioEncontrado.telefono,
         correo_electronico: usuarioEncontrado.correo_electronico,
         admin: usuarioEncontrado.admin,
+        rol: usuarioEncontrado.rol,
         createdAt: usuarioEncontrado.createdAt
 
     })
@@ -148,6 +149,7 @@ export const verifyToken = async (req, res) => {
             correo_electronico: userFound.correo_electronico,
             telefono: userFound.telefono,
             admin: userFound.admin,
+            rol: userFound.rol,
             createdAt: userFound.createdAt
         })
     })

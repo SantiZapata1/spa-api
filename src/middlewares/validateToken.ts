@@ -26,7 +26,7 @@ export const authAdmin = async (req, res, next) => {
             //Busca al usuario en la BD
             const usuario = await usuarios.findById(req.user.id)
             //Verifica si el usuario es admin
-            const isAdmin = usuario?.admin;
+            const isAdmin = usuario?.rol == "Administrador";
             //Si no es admin, devuelve el siguiente mensaje
             if (!isAdmin ) return res.status(403).json({ message: "You are not an admin" })
             //Si lo es, continúa a la página solicitada
