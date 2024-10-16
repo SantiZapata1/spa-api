@@ -1,5 +1,30 @@
 import usuarios from "../models/usuario";
 
+export const buscarUsuario = async (req, res) => {
+
+    interface Query {
+        nombre_de_usuario?: string;
+        rol?: string;
+    }
+    const { nombre_de_usuario, rol } = req.params;
+    const query: Query = {};
+
+    if(nombre_de_usuario !== "no_ingresado"){
+        query.nombre_de_usuario = nombre_de_usuario;
+    }
+    if(rol !== "no_ingresado"){
+        query.rol = rol;
+    }
+
+    console.log(query)
+    try {
+        const user = await usuarios.find(query);
+        res.status(200).json(user);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 export const getAdmins = async (req, res) => {
     try {
         const admins = await usuarios.find({ rol: "Administrador" });

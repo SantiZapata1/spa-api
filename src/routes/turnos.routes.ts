@@ -32,6 +32,5 @@ router.get('/obtener-turnos', obtenerTurnos)
 router.get('/obtener-turno-por-fechas/:desde/:hasta', authRequired, obtenerTurnoPorFechas)
 router.get('/obtener-turnos-usuario/:id', authRequired, obtenerTurnosUsuario)
 
-
 // Exportamos las rutas del api
 export default router

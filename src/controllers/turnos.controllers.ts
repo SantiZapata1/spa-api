@@ -71,10 +71,26 @@ export const getTurnosDeUsuario = async (req, res) => {
 
 export const obtenerTurnoPorFechas = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        const { fechaInicio, fechaFin } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
-        const turnosList = await turnos.find({ fecha: { $gte: fechaInicio, $lte: fechaFin } }); // Buscamos los turnos en la base de datos en base al rango de fechas
+        const { desde, hasta } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
 
+        // Convertir las fechas a objetos Date
+        const desdeDate = new Date(desde)
+        const hastaDate = new Date(hasta);
+
+        // Imprimir las fechas convertidas
+        
+        if (isNaN(desdeDate.getTime()) || isNaN(hastaDate.getTime())) {
+            return res.status(400).json({ message: "Fechas inválidas" });
+        }
+        
+        // Asegurarse de que las fechas incluyan la hora correcta
+        desdeDate.setUTCHours(0, 0, 0, 0);
+        hastaDate.setUTCHours(23, 59, 59, 999);
+        
+        const turnosList = await turnos.find({ fecha: { $gte: desdeDate, $lte: hastaDate } }); // Buscamos los turnos en la base de datos en base al rango de fechas
+        console.log(turnosList);
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
 
     } catch (error) { // Si hay un error, lo capturamos
         res.status(500).json({ message: 'Hubo un error al obtener turnos por fechas.' }); // Enviamos un mensaje de error al cliente
