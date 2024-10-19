@@ -106,3 +106,18 @@ export const setUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+export const setRolUser = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const { rol } = req.body;
+
+        await usuarios.findByIdAndUpdate(id, { rol });
+        
+        res.status(200).json({ message: "Rol cambiado correctamente" });
+
+        
+    }catch(error: any){
+        res.status(500).json({ message: error.message });
+    }   
+}
