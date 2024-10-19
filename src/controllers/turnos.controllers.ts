@@ -116,9 +116,6 @@ export const obtenerTurnosUsuario = async (req, res) => { // Definimos la funci√
         const { id } = req.params; // Obtenemos el id del usuario
         const usuario = await usuarios.findById(id); // Buscamos el usuario en la base de datos
         const turnosList = await turnos.find({ _id: { $in: usuario?.turnos } }); // Buscamos los turnos en la base de datos que pertenecen al usuario
-
-        console.log(turnosList)
-        
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
