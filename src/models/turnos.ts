@@ -25,6 +25,11 @@ const TurnoSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    monto_abonado: {
+        type: Number,
+        required: true,
+        trim: true
+    },
     // Definición de comentarios del turno
     comentarios: {
         type: String,

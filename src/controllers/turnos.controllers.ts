@@ -21,8 +21,8 @@ import turnos from '../models/turnos' // Importamos el modelo de turnos
 import usuarios from '../models/usuario' // Importamos el modelo de usuarios
 export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        const { fecha, hora, cliente, servicio, comentarios, idUsuario } = req.body; // Obtenemos los datos del cuerpo de la petición
-        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios }); // Creamos un nuevo turno con los datos recibidos
+        const { fecha, hora, cliente, servicio, comentarios, idUsuario,precio } = req.body; // Obtenemos los datos del cuerpo de la petición
+        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios, monto_abonado: precio }); // Creamos un nuevo turno con los datos recibidos
         await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
         await usuarios.findByIdAndUpdate(idUsuario, { $push: { turnos: nuevoTurno._id } }); // Buscamos y actualizamos el usuario en la base de datos
         
@@ -121,4 +121,55 @@ export const obtenerTurnosUsuario = async (req, res) => { // Definimos la funci�
     } catch (error) { // Si hay un error, lo capturamos
         res.status(500).json({ message: 'Hubo un error al obtener turnos del usuario.' }); // Enviamos un mensaje de error al cliente
     }
+}
+
+export const generarEstadisticasTurnos = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try{
+        const { desde, hasta } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
+
+        // Primero busca los turnos en el rango de fechas
+        const turnosList = await turnos.find({ fecha: { $gte: desde, $lte: hasta } }); // Buscamos los turnos en la base de datos en base al rango de fechas
+
+        // Ahora agrupame los turnos por servicio y su precio, es decir, tendría que quedar algo así como si hay 3 masajes a 500 -< {nombre: "Masaje" , precio: "1500", cantidad_solicitada: 3}
+        const estadisticas = turnosList.reduce((acc, turno) => {
+            // Si el servicio no existe en el acumulador, lo inicializamos
+            if (!acc[turno.servicio]) {
+                acc[turno.servicio] = { 
+                    nombre: turno.servicio, 
+                    precio: turno.monto_abonado, 
+                    cantidad: 1,
+                    total: turno.monto_abonado // Inicializa con el precio del primer turno
+                };
+            } else {
+                // Si ya existe, aumentamos la cantidad y el total
+                acc[turno.servicio].cantidad++;
+                acc[turno.servicio].total += turno.monto_abonado;
+            }
+            
+            // Mantenemos un objeto de "Total" en el acumulador
+            if (!acc["Total"]) {
+                acc["Total"] = { 
+                    nombre: "Total", 
+                    cantidad: 0, 
+                    precio: 0 
+                };
+            }
+            // Sumar al total general la cantidad y precio de cada servicio
+            acc["Total"].cantidad++;
+            acc["Total"].precio += turno.monto_abonado;
+        
+            return acc;
+        }, {});
+        
+
+        
+        console.log(estadisticas)
+
+        res.status(200).json(Object.values(estadisticas)); // Enviamos la lista de turnos al cliente
+
+
+    }catch(error){
+        console.log("Error generando estadisticas de turnos", error);
+    }
+
 }
