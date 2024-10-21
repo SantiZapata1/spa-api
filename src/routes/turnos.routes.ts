@@ -18,7 +18,7 @@ Distintos tipos de peticiones:
 
 // Llamamos a router para definir las rutas del api
 import { Router } from 'express'
-import { solicitarTurno, eliminarTurno, obtenerTurnos, obtenerTurnoPorFechas, obtenerTurnosUsuario, generarEstadisticasTurnos, asignarTurnoAProfesional, obtenerMisTurnosAsignados } from '../controllers/turnos.controllers'
+import { solicitarTurno, eliminarTurno, obtenerTurnos, obtenerTurnoPorFechas, obtenerTurnosUsuario, generarEstadisticasTurnos, asignarTurnoAProfesional, obtenerMisTurnosAsignados, marcarTurnoRealizado } from '../controllers/turnos.controllers'
 
 // Importar el middleware que requiere iniciar sesión
 import { authRequired } from '../middlewares/validateToken'
@@ -34,7 +34,7 @@ router.get('/obtener-turnos-usuario/:id', authRequired, obtenerTurnosUsuario)
 router.get('/generar-estadistica-turnos/:desde/:hasta', authRequired, generarEstadisticasTurnos)
 router.put('/asignar-turno/:id/:idProfesional', authRequired, asignarTurnoAProfesional)
 router.get('/obtener-mis-turnos-asignados/:idProfesional', authRequired, obtenerMisTurnosAsignados)
-
+router.put('/marcar-turno-realizado/:id', authRequired, marcarTurnoRealizado)
 
 // Exportamos las rutas del api
 export default router

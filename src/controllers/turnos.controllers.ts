@@ -61,6 +61,18 @@ export const obtenerMisTurnosAsignados = async (req, res) => { // Definimos la f
 
 }
 
+export const marcarTurnoRealizado = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try{
+        const { id } = req.params; // Obtenemos los datos del cuerpo de la petición
+        await turnos.findByIdAndUpdate(id, { estado: "Realizado" }); // Buscamos y actualizamos el turno en la base de datos
+        res.status(200).json({ message: 'Turno marcado como realizado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+
+    }catch(error){
+        console.log("error marcando turno como realizado", error);
+    }
+
+}
+
 
 export const eliminarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
@@ -78,8 +90,10 @@ export const eliminarTurno = async (req, res) => { // Definimos la función que 
 
 export const obtenerTurnos = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
-        // Busca los turnos del más reciente al más antiguo
-        const turnosList = await turnos.find().sort({ fecha: -1 }); // Buscamos los turnos en la base de datos
+        // Busca los turnos del más reciente al más antiguo pero sin contar los que estén con estado = "Realizado"
+        const turnosList = await turnos.find({ estado: { $ne: "Realizado" } }).sort({ fecha: 1 }); // Buscamos los turnos en la base de datos
+     
+     
         res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
