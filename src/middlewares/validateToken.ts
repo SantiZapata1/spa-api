@@ -36,3 +36,20 @@ export const authAdmin = async (req, res, next) => {
         }
     })
 }
+
+export const authProfesional = async (req, res, next) => {
+    authRequired(req, res, async () => {
+        try {
+            //Busca al usuario en la BD
+            const usuario = await usuarios.findById(req.user.id)
+            //Verifica si el usuario es admin
+            const isProfesional = usuario?.rol == "Profesional" || usuario?.rol == "Administrador";
+            //Si no es admin, devuelve el siguiente mensaje
+            if (!isProfesional ) return res.status(403).json({ message: "You are not a profesional" })
+            //Si lo es, continúa a la página solicitada
+            next()
+        } catch (err) {
+            console.log(err)
+        }
+    })
+}
