@@ -36,6 +36,16 @@ const TurnoSchema = new mongoose.Schema({
         required: false,
         trim: true
     },
+    estado: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    profesional_asignado: {
+        type: String,
+        required: false,
+        trim: true
+    },
     creacion:{
         type:Date,
         default:Date.now

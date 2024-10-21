@@ -121,3 +121,14 @@ export const setRolUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }   
 }
+
+export const getProfesionales = async (req, res) => {
+    try {
+        const profesionales = await usuarios.find({ rol: "Profesional" });
+        res.status(200).json(profesionales);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+
+
+}

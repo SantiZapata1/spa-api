@@ -22,7 +22,7 @@ import usuarios from '../models/usuario' // Importamos el modelo de usuarios
 export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
         const { fecha, hora, cliente, servicio, comentarios, idUsuario,precio } = req.body; // Obtenemos los datos del cuerpo de la petición
-        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios, monto_abonado: precio }); // Creamos un nuevo turno con los datos recibidos
+        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios, monto_abonado: precio, estado: "Asignación" }); // Creamos un nuevo turno con los datos recibidos
         await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
         await usuarios.findByIdAndUpdate(idUsuario, { $push: { turnos: nuevoTurno._id } }); // Buscamos y actualizamos el usuario en la base de datos
         
@@ -32,6 +32,35 @@ export const solicitarTurno = async (req, res) => { // Definimos la función que
         res.status(500).json({ message: 'Hubo un error al solicitar turno.' }); // Enviamos un mensaje de error al cliente
     }
 }
+
+export const asignarTurnoAProfesional = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try{
+        const { id: idTurno, idProfesional } = req.params; // Obtenemos los datos del cuerpo de la petición
+        console.log("LLEGÓ")
+        console.log(req.params)
+
+        await turnos.findByIdAndUpdate(idTurno, { estado: "Asignado", profesional_asignado: idProfesional }); // Buscamos y actualizamos el turno en la base de datos
+        res.status(200).json({ message: 'Turno asignado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+
+
+    }catch(error){
+        console.log("error asignando turno", error);
+    }
+
+}
+
+export const obtenerMisTurnosAsignados = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try{
+        const { idProfesional } = req.params; // Obtenemos los datos del cuerpo de la petición
+        const turnosList = await turnos.find({ profesional_asignado: idProfesional }); // Buscamos los turnos en la base de datos
+        res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
+    }catch(error){
+        console.log("error obteniendo turnos asignados", error);
+    }
+
+}
+
 
 export const eliminarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
