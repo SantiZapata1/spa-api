@@ -22,11 +22,16 @@ import usuarios from '../models/usuario' // Importamos el modelo de usuarios
 export const solicitarTurno = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
     try {
         const { fecha, hora, cliente, servicio, comentarios, idUsuario,precio } = req.body; // Obtenemos los datos del cuerpo de la petición
-        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios, monto_abonado: precio, estado: "Asignación" }); // Creamos un nuevo turno con los datos recibidos
+        
+        console.log(req.body)
+
+        const nuevoTurno = new turnos({ fecha, hora, cliente, servicio, comentarios, monto_abonado: precio, pago_realizado: false, estado: "Asignación" }); // Creamos un nuevo turno con los datos recibidos
         await nuevoTurno.save(); // Guardamos el nuevo turno en la base de datos
         await usuarios.findByIdAndUpdate(idUsuario, { $push: { turnos: nuevoTurno._id } }); // Buscamos y actualizamos el usuario en la base de datos
         
-        res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
+        res.json( nuevoTurno )
+
+        // res.status(200).json({ message: 'Turno solicitado correctamente.' }); // Enviamos un mensaje de éxito al cliente
 
     } catch (error) { // Si hay un error, lo capturamos
         res.status(500).json({ message: 'Hubo un error al solicitar turno.' }); // Enviamos un mensaje de error al cliente
@@ -236,7 +241,7 @@ export const obtenerTurnoPorFechasYProfesional = async (req, res) => { // Defini
         hastaDate.setUTCHours(23, 59, 59, 999);
 
         let turnosList;
-        if(idProfesional === "all"){
+        if(idProfesional === "all"){    
 
             turnosList = await turnos.find({ fecha: { $gte: desdeDate, $lte: hastaDate } }); // Buscamos los turnos en la base de datos en base al rango de fechas
         }else if(idProfesional === "No asignado"){

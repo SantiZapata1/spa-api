@@ -41,6 +41,11 @@ const TurnoSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    pago_realizado: {
+        type: Boolean,
+        required: true,
+        trim: true
+    },
     profesional_asignado: {
         type: String,
         required: false,
