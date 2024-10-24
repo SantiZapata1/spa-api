@@ -216,3 +216,40 @@ export const generarEstadisticasTurnos = async (req, res) => { // Definimos la f
     }
 
 }
+
+export const obtenerTurnoPorFechasYProfesional = async (req, res) => { // Definimos la función que se va a ejecutar cuando se haga la petición
+    try{
+        const { desde, hasta, idProfesional } = req.params; // Obtenemos las fechas de inicio y fin de la búsqueda
+
+        // Convertir las fechas a objetos Date
+        const desdeDate = new Date(desde)
+        const hastaDate = new Date(hasta);
+        console.log(idProfesional)
+        // Imprimir las fechas convertidas
+        
+        if (isNaN(desdeDate.getTime()) || isNaN(hastaDate.getTime())) {
+            return res.status(400).json({ message: "Fechas inválidas" });
+        }
+        
+        // Asegurarse de que las fechas incluyan la hora correcta
+        desdeDate.setUTCHours(0, 0, 0, 0);
+        hastaDate.setUTCHours(23, 59, 59, 999);
+
+        let turnosList;
+        if(idProfesional === "all"){
+
+            turnosList = await turnos.find({ fecha: { $gte: desdeDate, $lte: hastaDate } }); // Buscamos los turnos en la base de datos en base al rango de fechas
+        }else if(idProfesional === "No asignado"){
+            console.log("ACA")
+            turnosList = await turnos.find({ fecha: { $gte: desdeDate, $lte: hastaDate }, estado: "Asignación" }); // Buscamos los turnos en la base de datos en base al rango de fechas
+        }
+        else{
+            turnosList = await turnos.find({ fecha: { $gte: desdeDate, $lte: hastaDate }, profesional_asignado: idProfesional }); // Buscamos los turnos en la base de datos en base al rango de fechas
+        }
+        
+        res.status(200).json(turnosList); // Enviamos la lista de turnos al cliente
+
+    }catch(error){
+        console.log("Error obteniendo turnos por fechas y profesional", error);
+    }
+}
