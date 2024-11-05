@@ -34,8 +34,8 @@ export const createSession = async (req, res) => {
             },
         ],
         mode: 'payment',
-        success_url: `${appUrl}/api/success/`,
-        cancel_url: `${appUrl}/api/cancel`,
+        success_url: `${appUrl}api/success/`,
+        cancel_url: `${appUrl}api/cancel`,
     });
     
     
